@@ -34,7 +34,7 @@
 
     <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
          id="templatemo_main_nav">
-      <div class="flex-fill">
+      <div class="flex  -fill">
         <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
           <li class="nav-item">
             <a class="nav-link" routerLink="">Trang Chủ</a>
@@ -52,13 +52,13 @@
       </div>
       <div class="navbar align-self-center d-flex">
 
-        <a class="nav-icon d-none d-lg-inline text-decoration-none" routerLink="user-create" data-bs-toggle="modal"
+        <a *ngIf="username!=''" class="nav-icon d-none d-lg-inline text-decoration-none" routerLink="user-create" data-bs-toggle="modal"
            data-bs-target="#templatemo_search">
           <i class="fa fa-user text-dark mr-2"></i>
-          <span class="mx-1">Đăng Kí</span>
+          <span (click)="whenLogout()" class="mx-1">Đăng Xuất</span>
         </a>
 
-        <a class="nav-icon d-none d-lg-inline text-decoration-none" routerLink="login" data-bs-toggle="modal"
+        <a *ngIf="username==''"  class="nav-icon d-none d-lg-inline text-decoration-none" routerLink="login" data-bs-toggle="modal"
            data-bs-target="#templatemo_search">
           <i class="fa fa-sign-in-alt text-dark mr-2"></i>
           <span class="mx-1">Đăng Nhập</span>

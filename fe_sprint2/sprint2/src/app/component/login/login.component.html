@@ -2,19 +2,26 @@
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100">
-      <form class="login100-form">
+      <form class="login100-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 
         <span class="login100-form-title p-b-43">
 						Đăng Nhập Để Tiếp Tục</span>
 
 
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+          <input formControlName="username" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
           <label for="floatingInput">Tài Khoản Hoặc Email</label>
+          <span class="text-danger" *ngIf="formGroup.controls.username.hasError('required')
+                  && formGroup.controls.username.dirty">
+            Vui lòng nhập tài khoản !</span>
+
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <input type="password" formControlName="password" class="form-control" id="floatingPassword" placeholder="Password">
           <label for="floatingPassword">Mật Khẩu</label>
+          <span class="text-danger" *ngIf="formGroup.controls.password.hasError('required')
+                  && formGroup.controls.password.dirty">
+            Vui lòng nhập mật khẩu !</span>
         </div>
 
         <div class="flex-sb-m w-full p-t-3 p-b-32">

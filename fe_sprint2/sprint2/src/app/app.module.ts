@@ -10,6 +10,15 @@ import { LoginComponent } from './component/login/login.component';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 import { PaymentCardComponent } from './component/payment-card/payment-card.component';
 import { UserCreateComponent } from './component/user-create/user-create.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
+
+
+const googleLoginOptions = {
+  scope: 'profile email',
+  plugin_name: 'login'
+};
 
 @NgModule({
   declarations: [
@@ -24,9 +33,30 @@ import { UserCreateComponent } from './component/user-create/user-create.compone
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    SocialLoginModule,
+    ReactiveFormsModule,
+
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '612774287153-uthnsrl25on17doe8413il68ebv9c969.apps.googleusercontent.com',
+              googleLoginOptions
+            )
+          },
+        ]
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
