@@ -13,6 +13,7 @@ import { UserCreateComponent } from './component/user-create/user-create.compone
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
+import { ClothesListComponent } from './component/clothes-list/clothes-list.component';
 
 
 const googleLoginOptions = {
@@ -29,7 +30,8 @@ const googleLoginOptions = {
     LoginComponent,
     ProductDetailComponent,
     PaymentCardComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    ClothesListComponent
   ],
   imports: [
     BrowserModule,
