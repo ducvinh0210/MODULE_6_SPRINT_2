@@ -1,11 +1,10 @@
-package com.codegym.dto;
+package com.codegym.dto;public interface IProductDto {
 
-public interface IProductDto {
     Integer getId();
 
     String getName();
 
-    double getPrice();
+    Integer getPrice();
 
     Integer getDiscount();
 
@@ -17,7 +16,6 @@ public interface IProductDto {
 
     String getType();
 
-    Integer getSumQuantity();
 
 
 }

@@ -15,12 +15,14 @@ public class ProductService implements IProductService {
  private IProductRepository iProductRepository;
 
     @Override
-    public Page<IProductDto> showListClothes(String nameProduct, String manufacturerProduct, String typeProduct, double priceStart, double priceEnd, Pageable pageable) {
+    public Page<IProductDto> showListClothes(String nameProduct, String manufacturerProduct, String typeProduct, Integer priceStart, Integer priceEnd, Pageable pageable) {
         return iProductRepository.showListClothes(nameProduct, manufacturerProduct, typeProduct,priceStart, priceEnd, pageable);
     }
 
     @Override
-    public Page<IProductDto> showListClothesByName(String nameProduct, Pageable pageable) {
-        return iProductRepository.showListByName(nameProduct,pageable);
+    public Page<IProductDto> showList(String nameProduct, Pageable pageable) {
+        return iProductRepository.showList(nameProduct, pageable);
     }
+
+
 }

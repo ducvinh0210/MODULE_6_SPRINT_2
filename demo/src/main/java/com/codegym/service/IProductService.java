@@ -6,6 +6,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface IProductService {
 
-    Page<IProductDto> showListClothes(String nameProduct, String manufacturerProduct, String typeProduct, double priceStart, double priceEnd, Pageable pageable);
-    Page<IProductDto> showListClothesByName(String nameProduct, Pageable pageable);
+    Page<IProductDto> showListClothes(String nameProduct, String manufacturerProduct, String typeProduct, Integer priceStart, Integer priceEnd, Pageable pageable);
+
+
+    Page<IProductDto> showList(String nameProduct, Pageable pageable);
+
+
 }

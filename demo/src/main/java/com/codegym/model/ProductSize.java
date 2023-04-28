@@ -13,6 +13,8 @@ public class ProductSize {
     private Integer Id;
     private String name;
     private boolean isDelete;
+    private Integer quantity;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "productSize")
@@ -26,14 +28,14 @@ public class ProductSize {
     @JoinColumn(name = "size_id", referencedColumnName = "id")
     private Size size;
 
-
     public ProductSize() {
     }
 
-    public ProductSize(Integer id, String name, boolean isDelete, Set<OrderDetail> orderDetails, Product product, Size size) {
+    public ProductSize(Integer id, String name, boolean isDelete, Integer quantity, Set<OrderDetail> orderDetails, Product product, Size size) {
         Id = id;
         this.name = name;
         this.isDelete = isDelete;
+        this.quantity = quantity;
         this.orderDetails = orderDetails;
         this.product = product;
         this.size = size;
@@ -61,6 +63,14 @@ public class ProductSize {
 
     public void setDelete(boolean delete) {
         isDelete = delete;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Set<OrderDetail> getOrderDetails() {

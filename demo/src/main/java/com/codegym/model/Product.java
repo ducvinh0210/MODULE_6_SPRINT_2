@@ -13,7 +13,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private double price;
+    private Integer price;
     private Integer discount;
     private String manufacturer;
     private String image;
@@ -27,10 +27,11 @@ public class Product {
     @JoinColumn(name = "product_type_id", referencedColumnName = "id")
     private ProductType productType;
 
+
     public Product() {
     }
 
-    public Product(Integer id, String name, double price, Integer discount, String manufacturer, String image, String describes, boolean isDelete, Set<ProductSize> productSizes, ProductType productType) {
+    public Product(Integer id, String name, Integer price, Integer discount, String manufacturer, String image, String describes, boolean isDelete, Set<ProductSize> productSizes, ProductType productType) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -59,11 +60,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
