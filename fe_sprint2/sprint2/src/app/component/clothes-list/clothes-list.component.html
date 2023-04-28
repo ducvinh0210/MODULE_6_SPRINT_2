@@ -1,30 +1,41 @@
-<!--<div class="row">-->
-<!--  <div class="col-lg-4 col-md-6 col-sm-6 mb-5" *ngFor="let item of (clothesList$ | async)!; index as i">-->
-<!--    <div class="product__discount__item">-->
-<!--      <div class="product__discount__item__pic set-bg"></div>-->
-<!--           style="background-image: url({{item.image}}); border: 1px solid lightgray;-->
-<!--                   box-shadow:15px 15px 15px lightblue">-->
-<!--        <div class="product__discount__percent" *ngIf="item.discount > 0">-{{item.discount}}%</div>-->
-<!--        <ul class="product__item__pic__hover">-->
-<!--&lt;!&ndash;          <li><a (click)="getLogin(item.id)" style="cursor: pointer"><i class="fa fa-eye"></i></a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;          <li><a (click)="getLogin(item.id)" style="cursor: pointer"><i class="fa fa-shopping-cart"></i></a></li>&ndash;&gt;-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--      <div class="product__discount__item__text">-->
-<!--        <span style="font-size: 16px">{{item.manufacturer | titlecase}}</span>-->
-<!--        <h5 class="h5">{{item.name | titlecase}}</h5>-->
-<!--        <div class="product__item__price">{{item.price * (1 - item.discount / 100) | currency: "VND"}}-->
-<!--          <span *ngIf="item.discount > 0">{{item.price | currency: "VND"}}</span></div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+<div id="body" >
+
+<div class="search-box d-flex justify-content-end ps-4">
+
+    <input type="text" id="search-text" [(ngModel)]="nameProduct" placeholder="Tìm kiếm sản phẩm" required>
+    <button (click)="listClothes()" id="search-btn" >
+      <svg  xmlns="http://www.w3.org/2000/svg" width="16"  height="16" fill="currentColor" class="bi bi-search"
+           viewBox="0 0 16 16">
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+      </svg>
+    </button>
+
+</div>
 
 
+
+
+</div>
+<div style="margin-left: 25px" class="btn-group">
+  <button type="button" class="btn btn-success">Bộ lọc</button>
+  <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="#">Separated link</a></li>
+  </ul>
+</div>
+
+
+
+<div style="margin-left: 25px; margin-right: 25px">
 <div class="row">
-
-
-
-  <div class="col-md-3 "*ngFor="let item of (clothesList$ | async)!">
+  <div class="col-md-3 " *ngFor="let item of clothesDto">
     <div class="card mb-4 product-wap rounded-0">
       <div class="card rounded-0">
         <img class="card-img rounded-0 img-fluid" src="{{item.image}}" style="height: 300px">
@@ -52,13 +63,72 @@
             <i class="text-muted fa fa-star"></i>
           </li>
         </ul>
-<!--        <p class="text-center ">2.500.000 vnđ</p>-->
-
-
         <div class="product__item__price">{{item.price * (1 - item.discount / 100) | currency: "VND"}}
-                   <span *ngIf="item.discount > 0">{{item.price | currency: "VND"}}</span></div>
+          <span *ngIf="item.discount > 0">{{item.price | currency: "VND"}}</span></div>
 
-                </div>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div style="margin-left: 45%; margin-bottom: 1%">
+  <div class="row" style="padding: 0; margin: 0" *ngIf="clothesDto.length!=0">
+
+    <div *ngIf="clothesPage" class="col- 4">
+      <ul class="pagination">
+<!--        <li class="page-item" [ngClass]="clothesPage.first ? 'disabled': ''">-->
+<!--          <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>-->
+<!--        </li>-->
+        <li class="page-item" [ngClass]="clothesPage.first ? 'disabled': ''">
+          <a role="button" class="page-link" (click)="changePage(clothesPage.number - 1)"><</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number - 3 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number - 4)">{{clothesPage.number - 3}}</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number - 2 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number - 3)">{{clothesPage.number - 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number - 1 > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number - 2)">{{clothesPage.number - 1}}</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number > 0">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number - 1)">{{clothesPage.number}}</a>
+        </li>
+        <li class="page-item active"><a class="page-link">{{clothesPage.number + 1}}</a></li>
+        <li class="page-item" *ngIf="clothesPage.number + 2 <= clothesPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number + 1)">{{clothesPage.number + 2}}</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number + 3 <= clothesPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number + 2)">{{clothesPage.number + 3}}</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number + 4 <= clothesPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number + 3)">{{clothesPage.number + 4}}</a>
+        </li>
+        <li class="page-item" *ngIf="clothesPage.number + 5 <= clothesPage.totalPages">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number + 4)">{{clothesPage.number + 5}}</a>
+        </li>
+        <li class="page-item" [ngClass]="clothesPage.last ? 'disabled': ''">
+          <a role="button" class="page-link"
+             (click)="changePage(clothesPage.number + 1)">></a>
+        </li>
+<!--        <li class="page-item" [ngClass]="clothesPage.last ? 'disabled': ''">-->
+<!--          <a role="button" class="page-link"-->
+<!--             (click)="changePage(clothesPage.totalPages - 1)">-->
+<!--            Trang cuối-->
+<!--          </a>-->
+<!--        </li>-->
+      </ul>
+    </div>
+  </div>
+</div>
+
