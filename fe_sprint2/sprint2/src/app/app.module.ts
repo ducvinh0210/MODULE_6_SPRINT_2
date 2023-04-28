@@ -14,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import { ClothesListComponent } from './component/clothes-list/clothes-list.component';
+import { ClothesCardComponent } from './component/clothes-card/clothes-card.component';
 
 
 const googleLoginOptions = {
@@ -31,7 +32,8 @@ const googleLoginOptions = {
     ProductDetailComponent,
     PaymentCardComponent,
     UserCreateComponent,
-    ClothesListComponent
+    ClothesListComponent,
+    ClothesCardComponent
   ],
   imports: [
     BrowserModule,

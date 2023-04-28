@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {ICustomer} from '../model/i-customer';
 import {IClothesDto} from '../model/i-clothes-dto';
 import {DataResult} from '../model/data-result';
+import {ICart} from '../model/i-cart';
 
 const API_URL = 'http://localhost:8080/api';
 
@@ -32,5 +33,13 @@ export class ClothesService {
 
   showList(nameProduct: string, pageNumber: any): Observable<any> {
     return this.httpClient.get<any>(API_URL + '/clothes/list?nameProduct=' + nameProduct + '&page=' + pageNumber);
+  }
+
+  findCartByUser(id: number): Observable<ICart[]> {
+    return this.httpClient.get<ICart[]>(API_URL + '/clothes/card' + id);
+  }
+
+  paymentClothes(id: number): Observable<void> {
+    return this.httpClient.get<void>(API_URL + '/clothes/payment-clothes' + id);
   }
 }
