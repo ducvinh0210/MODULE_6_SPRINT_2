@@ -1,4 +1,6 @@
-package com.codegym.dto;public interface IProductDto {
+package com.codegym.dto;
+
+public interface IProductDto {
 
     Integer getId();
 
@@ -16,6 +18,7 @@ package com.codegym.dto;public interface IProductDto {
 
     String getType();
 
+    Integer getSumQuantity();
 
 
 }

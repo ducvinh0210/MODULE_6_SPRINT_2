@@ -11,5 +11,7 @@ public interface IProductService {
 
     Page<IProductDto> showList(String nameProduct, Pageable pageable);
 
+    IProductDto findById(Integer id);
+
 
 }

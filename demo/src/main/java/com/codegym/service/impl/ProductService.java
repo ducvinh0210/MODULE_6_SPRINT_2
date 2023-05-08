@@ -24,5 +24,10 @@ public class ProductService implements IProductService {
         return iProductRepository.showList(nameProduct, pageable);
     }
 
+    @Override
+    public IProductDto findById(Integer id) {
+        return iProductRepository.findClothesById(id);
+    }
+
 
 }

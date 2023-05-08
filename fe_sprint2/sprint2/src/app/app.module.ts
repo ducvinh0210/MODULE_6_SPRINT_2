@@ -15,6 +15,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import { ClothesListComponent } from './component/clothes-list/clothes-list.component';
 import { ClothesCardComponent } from './component/clothes-card/clothes-card.component';
+import { ClothesDetailComponent } from './component/clothes-detail/clothes-detail.component';
 
 
 const googleLoginOptions = {
@@ -33,7 +34,8 @@ const googleLoginOptions = {
     PaymentCardComponent,
     UserCreateComponent,
     ClothesListComponent,
-    ClothesCardComponent
+    ClothesCardComponent,
+    ClothesDetailComponent
   ],
   imports: [
     BrowserModule,

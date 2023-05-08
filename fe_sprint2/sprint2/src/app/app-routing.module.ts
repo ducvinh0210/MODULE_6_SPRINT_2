@@ -6,6 +6,8 @@ import {ProductDetailComponent} from './component/product-detail/product-detail.
 import {PaymentCardComponent} from './component/payment-card/payment-card.component';
 import {UserCreateComponent} from './component/user-create/user-create.component';
 import {ClothesListComponent} from './component/clothes-list/clothes-list.component';
+import {ClothesCardComponent} from './component/clothes-card/clothes-card.component';
+import {ClothesDetailComponent} from './component/clothes-detail/clothes-detail.component';
 
 
 const routes: Routes = [
@@ -15,7 +17,9 @@ const routes: Routes = [
   {path: 'product-detail', component: ProductDetailComponent},
   {path: 'payment-cart', component: PaymentCardComponent},
   {path: 'user-create', component: UserCreateComponent},
-  {path: 'product-list', component: ClothesListComponent}
+  {path: 'product-list', component: ClothesListComponent},
+  {path: 'cart', component: ClothesCardComponent},
+  {path: 'detail/:id', component: ClothesDetailComponent}
 
 ];
 

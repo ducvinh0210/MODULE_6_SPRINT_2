@@ -10,4 +10,5 @@ public interface IClothesCartDto {
     String getImage();
     String getDate();
 
+
 }

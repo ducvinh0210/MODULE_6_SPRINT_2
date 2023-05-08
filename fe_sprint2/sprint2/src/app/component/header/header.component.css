@@ -1,0 +1,9 @@
+.header__cart__price {
+  font-size: 14px;
+  color: #6f6f6f;
+  display: inline-block;
+}
+.header__cart__price span {
+  color: #252525;
+  font-weight: 700;
+}

@@ -64,10 +64,15 @@
           <span class="mx-1">Đăng Nhập</span>
         </a>
 
-        <a class="nav-icon position-relative text-decoration-none" routerLink="payment-cart">
+        <a  (click)="getLoginToCart()" class="nav-icon position-relative text-decoration-none" routerLink="payment-cart">
           <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+<!--          <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>-->
         </a>
+
+        <div class="header__cart__price ml-2" *ngIf="username != ''">Chào,
+          <span routerLink="/info-customer" style="cursor: pointer">{{username}}</span></div>
+
+
 
       </div>
     </div>

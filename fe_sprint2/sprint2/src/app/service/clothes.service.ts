@@ -35,11 +35,45 @@ export class ClothesService {
     return this.httpClient.get<any>(API_URL + '/clothes/list?nameProduct=' + nameProduct + '&page=' + pageNumber);
   }
 
+  showListClothesNewest(nameProduct: string, pageNumber: any): Observable<any> {
+    return this.httpClient.get<any>(API_URL + '/clothes/list-newest?nameProduct=' + nameProduct + '&page=' + pageNumber);
+  }
+
+  showListClothesPriceAsc(nameProduct: string, pageNumber: any): Observable<any> {
+    return this.httpClient.get<any>(API_URL + '/clothes/list-price-asc?nameProduct=' + nameProduct + '&page=' + pageNumber);
+  }
+
   findCartByUser(id: number): Observable<ICart[]> {
-    return this.httpClient.get<ICart[]>(API_URL + '/clothes/card' + id);
+    return this.httpClient.get<ICart[]>(API_URL + '/clothes/cart/' + id);
   }
 
   paymentClothes(id: number): Observable<void> {
-    return this.httpClient.get<void>(API_URL + '/clothes/payment-clothes' + id);
+    return this.httpClient.get<void>(API_URL + '/clothes/payment-clothes/' + id);
+  }
+
+  findClothesById(id: number): Observable<IClothesDto> {
+    return this.httpClient.get<IClothesDto>(API_URL + '/clothes/detail/' + id);
+  }
+
+
+  addToCart(quantity: number, customerId: number, productSizeId: number): Observable<void> {
+    return this.httpClient.get<void>(API_URL + '/clothes/add-cart/' + quantity + '&' + customerId + '&' + productSizeId);
+  }
+
+
+  findAllSizeByClothes(id: number): Observable<IClothesDto[]> {
+    return this.httpClient.get<IClothesDto[]>(API_URL + '/clothes/clothes-size/' + id);
+  }
+
+  descQuantityCart(id: number): Observable<void> {
+    return this.httpClient.get<void>(API_URL + '/clothes/desc-quantity/' + id);
+  }
+
+  ascQuantityCart(id: number): Observable<void> {
+    return this.httpClient.get<void>(API_URL + '/clothes/asc-quantity/' + id);
+  }
+
+  removeCart(id: number): Observable<void> {
+    return this.httpClient.get<void>(API_URL + '/clothes/remove-cart/' + id);
   }
 }

@@ -30,7 +30,8 @@ export class ClothesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.username = '';
+    this.showUsername();
   }
 
   showUsername() {
@@ -42,9 +43,29 @@ export class ClothesListComponent implements OnInit {
   }
 
   listClothes() {
+    this.clothesService.showListClothesNewest(this.nameProduct.trim(), this.page).subscribe(value => {
+      this.clothesDto = value.content;
+      this.clothesPage = value;
+    }, error => {
+      this.clothesDto = [];
+    });
+  }
+
+  listClothesPriceDesc() {
     this.clothesService.showList(this.nameProduct.trim(), this.page).subscribe(value => {
       this.clothesDto = value.content;
       this.clothesPage = value;
+    }, error => {
+      this.clothesDto = [];
+    });
+  }
+
+  listClothesPriceAsc() {
+    this.clothesService.showListClothesPriceAsc(this.nameProduct.trim(), this.page).subscribe(value => {
+      this.clothesDto = value.content;
+      this.clothesPage = value;
+    }, error => {
+      this.clothesDto = [];
     });
   }
 
@@ -55,4 +76,11 @@ export class ClothesListComponent implements OnInit {
   }
 
 
+  getLogin(id: number) {
+    if (this.username === '' || this.username === null || this.username === undefined) {
+      this.router.navigateByUrl('login');
+    } else {
+      this.router.navigateByUrl('detail/' + id);
+    }
+  }
 }

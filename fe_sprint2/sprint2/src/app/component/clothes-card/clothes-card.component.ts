@@ -32,13 +32,16 @@ export class ClothesCardComponent implements OnInit {
               private title: Title) {
     title.setTitle('Giỏ hàng');
   }
+
   ngOnInit(): void {
+    this.username = '';
+    this.showUsername();
   }
 
 
   showUsername() {
     this.username = this.tokenService.getUser().username;
-    console.log(this.username);
+    // console.log(this.username);
     this.roles = this.tokenService.getUser().roles;
     this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
     this.isEmployee = this.roles.indexOf('ROLE_EMPLOYEE') !== -1;
@@ -46,8 +49,11 @@ export class ClothesCardComponent implements OnInit {
 
     if (this.username !== '') {
       this.clothesService.findCustomer(this.username).subscribe(customer => {
+
+          console.log('day la customer' + customer);
           if (customer != null) {
             this.clothesService.findCartByUser(customer.id).subscribe(value => {
+                console.log(' day la value' + value);
                 this.cart = value;
 
                 for (const item of value) {
@@ -98,5 +104,64 @@ export class ClothesCardComponent implements OnInit {
   }
 
 
+  descQuantity(id: number): void {
+    this.clothesService.descQuantityCart(id).subscribe(() => {
+      window.location.reload();
+    }, error => {
+      console.log(error);
+    });
 
+  }
+
+
+  ascQuantity(id: number): void {
+    this.clothesService.ascQuantityCart(id).subscribe(() => {
+      window.location.reload();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  removeCart(id: number): void {
+    Swal.fire({
+      title: 'Bạn có chắc?',
+      text: 'Xóa sản phẩm này khỏi giỏ hàng!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Có, tôi muốn xóa!',
+      cancelButtonText: 'Đóng'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.clothesService.removeCart(id).subscribe(() => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+          });
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Xóa khỏi giỏ hàng thành công!'
+          });
+
+          window.location.reload();
+        }, error => {
+          console.log(error);
+        });
+      }
+    });
+  }
+
+
+  updateCart() {
+    this.pay = 'block';
+  }
 }
