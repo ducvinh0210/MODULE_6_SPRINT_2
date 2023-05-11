@@ -81,4 +81,13 @@ export class HeaderComponent implements OnInit {
       this.router.navigateByUrl('cart');
     }
   }
+
+
+  getLoginToHistoryCart() {
+    if (this.username === '' || this.username === null || this.username === undefined) {
+      this.router.navigateByUrl('login');
+    } else {
+      this.router.navigateByUrl('history');
+    }
+  }
 }

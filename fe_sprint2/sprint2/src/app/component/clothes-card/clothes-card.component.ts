@@ -67,7 +67,12 @@ export class ClothesCardComponent implements OnInit {
                     value: '' + Math.round(this.finalPrice / 23000 * 100) / 100,
                     currency: 'USD',
                     onApprove: (details) => {
-                      this.clothesService.paymentClothes(customer.id).subscribe(() => {
+
+
+                      // this.clothesService.setQuantityProduct(customer.id).subscribe(next => {
+                      //   console.log('abc');
+                      // });
+                      this.clothesService.setQuantityProduct(customer.id).subscribe(() => {
 
                         const Toast = Swal.mixin({
                           toast: true,
@@ -114,13 +119,47 @@ export class ClothesCardComponent implements OnInit {
   }
 
 
-  ascQuantity(id: number): void {
-    this.clothesService.ascQuantityCart(id).subscribe(() => {
-      window.location.reload();
-    }, error => {
-      console.log(error);
-    });
+  // ascQuantity(id: number): void {
+  //   this.clothesService.ascQuantityCart(id).subscribe(() => {
+  //     window.location.reload();
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
+
+
+  ascQuantity(item: any): void {
+    if (item.quantity > item.quantityProduct) {
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+
+      Toast.fire({
+        icon: 'warning',
+        title: 'Số lượng sản phẩm trong kho không đủ!'
+      }).then(r => location.replace('cart'));
+
+
+    } else {
+      this.clothesService.ascQuantityCart(item.id).subscribe(() => {
+        window.location.reload();
+      }, error => {
+        console.log(error);
+      });
+    }
+
+
   }
+
 
   removeCart(id: number): void {
     Swal.fire({

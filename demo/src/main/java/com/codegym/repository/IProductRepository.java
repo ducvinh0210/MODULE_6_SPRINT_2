@@ -25,15 +25,9 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     Page<IProductDto> showList(@Param("nameProduct") String nameProduct, Pageable pageable);
 
 
-
-@Query(value = "select product.id as id , product.name as name, product.price as price, product.discount as discount, product.image as image, product.manufacturer as manufacturer, product.describes as describes, product_type.name as type,sum(product_size.quantity) as sumQuantity" +
-        " from product join product_size on product.id = product_size.product_id join product_type on product.product_type_id= product_type.id where product.is_delete= false and product.id=:id group by product.id having sum(product_size.quantity)>0", nativeQuery = true)
+    @Query(value = "select product.id as id , product.name as name, product.price as price, product.discount as discount, product.image as image, product.manufacturer as manufacturer, product.describes as describes, product_type.name as type,sum(product_size.quantity) as sumQuantity" +
+            " from product join product_size on product.id = product_size.product_id join product_type on product.product_type_id= product_type.id where product.is_delete= false and product.id=:id group by product.id having sum(product_size.quantity)>0", nativeQuery = true)
     IProductDto findClothesById(@Param("id") Integer id);
-
-
-
-    
-
 
 
 }

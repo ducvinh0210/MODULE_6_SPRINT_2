@@ -4,9 +4,11 @@ package com.codegym.controller;
 import com.codegym.dto.IClothesCartDto;
 import com.codegym.dto.IProductDto;
 import com.codegym.dto.IProductSizeDto;
+import com.codegym.dto.Quantity;
 import com.codegym.jwt.JwtTokenUtil;
 import com.codegym.model.Customer;
 import com.codegym.model.OrderDetail;
+import com.codegym.model.ProductSize;
 import com.codegym.model.User;
 import com.codegym.payload.request.LoginRequest;
 import com.codegym.payload.request.LoginResponse;
@@ -16,6 +18,7 @@ import com.codegym.service.IProductService;
 import com.codegym.service.IProductSizeService;
 import com.codegym.service.security.impl.MyUserDetails;
 import com.codegym.service.security.impl.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -104,7 +107,7 @@ public class ClothesController {
 
     @GetMapping("/list")
     public ResponseEntity<Page<IProductDto>> showList(@RequestParam(value = "nameProduct", defaultValue = "") String nameProduct,
-                                                      @PageableDefault(value = 4, sort = "price", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                      @PageableDefault(value = 16, sort = "price", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<IProductDto> clothesList = iProductService.showList(nameProduct, pageable);
         if (clothesList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -116,7 +119,7 @@ public class ClothesController {
 
     @GetMapping("/list-price-asc")
     public ResponseEntity<Page<IProductDto>> showListPriceAsc(@RequestParam(value = "nameProduct", defaultValue = "") String nameProduct,
-                                                              @PageableDefault(value = 4, sort = "price", direction = Sort.Direction.ASC) Pageable pageable) {
+                                                              @PageableDefault(value = 16, sort = "price", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<IProductDto> clothesList = iProductService.showList(nameProduct, pageable);
         if (clothesList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -127,7 +130,7 @@ public class ClothesController {
 
     @GetMapping("/list-newest")
     public ResponseEntity<Page<IProductDto>> showListClothesNewest(@RequestParam(value = "nameProduct", defaultValue = "") String nameProduct,
-                                                                   @PageableDefault(value = 4, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                                   @PageableDefault(value = 16, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<IProductDto> clothesList = iProductService.showList(nameProduct, pageable);
         if (clothesList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -203,10 +206,39 @@ public class ClothesController {
     }
 
 
-    @GetMapping("payment-clothes/{customerId}")
-    public ResponseEntity<OrderDetail> paymentClothes(@PathVariable("customerId") Integer customerId) {
+
+    @GetMapping("/update-quantity-product")
+    public ResponseEntity<?> updateQuantityProduct(@RequestParam("customerId") Integer customerId) {
+        List<Quantity> productSizeList = iProductSizeService.findAllProductSizeList(customerId);
+
+        for (Quantity quantity : productSizeList) {
+            iProductSizeService.updateQuantity(quantity.getQuantityProduct() - quantity.getQuantity(), quantity.getProductId());
+        }
         iOrderDetailService.paymentClothes(customerId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+//    @GetMapping("/list-product-size)")
+//    public ResponseEntity<List<ProductSize>> findAllProductSize() {
+//        List<ProductSize> productSizeList = iProductSizeService.findAllProductSizeList();
+//        if (productSizeList.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(productSizeList, HttpStatus.OK);
+//    }
+
+
+
+    @GetMapping("/history-cart/{customerId}")
+    public ResponseEntity<Page<IClothesCartDto>> findAllHistoryCart(@PathVariable("customerId") Integer customerId,
+                                                                   @PageableDefault(value = 3) Pageable pageable) {
+        Page<IClothesCartDto> iClothesCartDtoPage = iOrderDetailService.findAllHistoryCart(customerId, pageable);
+        if (iClothesCartDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(iClothesCartDtoPage, HttpStatus.OK);
+    }
+
+
 
 }

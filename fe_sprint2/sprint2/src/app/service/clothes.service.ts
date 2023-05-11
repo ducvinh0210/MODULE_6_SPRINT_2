@@ -6,6 +6,7 @@ import {IClothesDto} from '../model/i-clothes-dto';
 import {DataResult} from '../model/data-result';
 import {ICart} from '../model/i-cart';
 
+
 const API_URL = 'http://localhost:8080/api';
 
 
@@ -51,6 +52,11 @@ export class ClothesService {
     return this.httpClient.get<void>(API_URL + '/clothes/payment-clothes/' + id);
   }
 
+  setQuantityProduct(id: number): Observable<any> {
+
+    return this.httpClient.get<any>(API_URL + '/clothes/update-quantity-product?customerId=' + id);
+  }
+
   findClothesById(id: number): Observable<IClothesDto> {
     return this.httpClient.get<IClothesDto>(API_URL + '/clothes/detail/' + id);
   }
@@ -75,5 +81,10 @@ export class ClothesService {
 
   removeCart(id: number): Observable<void> {
     return this.httpClient.get<void>(API_URL + '/clothes/remove-cart/' + id);
+  }
+
+  getAllHistoryClothes(id: number, curPage: number, numberRecord): Observable<DataResult<ICart>> {
+    return this.httpClient.get<DataResult<ICart>>(API_URL + '/clothes/history-cart/' + id + '?page=' + (curPage - 1) + '&size='
+      + numberRecord);
   }
 }

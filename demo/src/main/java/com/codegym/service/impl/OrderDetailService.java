@@ -4,6 +4,8 @@ import com.codegym.dto.IClothesCartDto;
 import com.codegym.repository.IOrderDetailRepository;
 import com.codegym.service.IOrderDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +45,11 @@ public class OrderDetailService implements IOrderDetailService {
     @Override
     public void paymentClothes(Integer id) {
         iOrderDetailRepository.paymentClothes(id);
+    }
+
+    @Override
+    public Page<IClothesCartDto> findAllHistoryCart(Integer id, Pageable pageable) {
+        return iOrderDetailRepository.findAllHistoryCart(id,pageable);
     }
 
 }
