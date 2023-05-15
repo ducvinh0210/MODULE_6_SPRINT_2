@@ -54,7 +54,7 @@ public class WedSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .permitAll()
 
-//
+
 
                 .and()
                 .authorizeRequests()

@@ -24,6 +24,14 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public void addProductCart(Integer quantity, Integer customerId, Integer productSizeId) {
+        List<IClothesCartDto> listClothesCart = findCartByUser(customerId);
+        for (IClothesCartDto iClothesCartDto: listClothesCart) {
+            if (iClothesCartDto.getProductSizeId().equals(productSizeId)){
+                  iOrderDetailRepository.updateQuantityOrderDetail(quantity+iClothesCartDto.getQuantity(),iClothesCartDto.getId());
+          return;
+            }
+
+        }
         iOrderDetailRepository.addOrderDetailCart(quantity, customerId, productSizeId);
     }
 
