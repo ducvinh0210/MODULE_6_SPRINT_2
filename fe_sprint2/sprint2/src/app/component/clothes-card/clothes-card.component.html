@@ -8,7 +8,7 @@
           </div>
         </div>
 
-        <div class="shoping__cart__table">
+        <div class="shoping__cart__table" *ngIf="cart ; else elseBlockTable" >
           <table>
             <thead>
             <tr>
@@ -60,6 +60,11 @@
             </tbody>
           </table>
         </div>
+        <ng-template #elseBlockTable>
+
+        <h4 style="text-align: center;color: red">Giỏ hàng của bạn trống</h4>
+        </ng-template>
+
       </div>
     </div>
     <div class="row">

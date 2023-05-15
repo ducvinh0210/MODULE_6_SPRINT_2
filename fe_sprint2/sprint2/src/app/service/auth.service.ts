@@ -27,7 +27,7 @@ export class AuthService {
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     };
   }
-  login(obj: { username: string; password: string; }): Observable<any> {
+    login(obj: { username: string; password: string; }): Observable<any> {
     return this.http.post(AUTH_API + 'login', {
       username: obj.username,
       password: obj.password

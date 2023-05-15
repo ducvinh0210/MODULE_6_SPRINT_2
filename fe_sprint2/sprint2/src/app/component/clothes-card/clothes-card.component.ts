@@ -129,7 +129,7 @@ export class ClothesCardComponent implements OnInit {
 
 
   ascQuantity(item: any): void {
-    if (item.quantity > item.quantityProduct) {
+    if (item.quantity >= item.quantityProduct) {
 
       const Toast = Swal.mixin({
         toast: true,

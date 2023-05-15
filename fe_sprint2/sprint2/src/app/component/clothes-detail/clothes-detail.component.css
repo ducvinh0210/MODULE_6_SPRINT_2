@@ -223,3 +223,26 @@
   color: black;
   cursor: pointer;
 }
+
+.sidebar__item__size {
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 10px;
+}
+
+.sidebar__item__size label {
+  font-size: 16px;
+  color: #6f6f6f;
+  display: inline-block;
+  padding: 8px 25px 6px;
+  background: #f5f5f5;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.sidebar__item__size label input {
+  position: absolute;
+  visibility: hidden;
+}
+
+

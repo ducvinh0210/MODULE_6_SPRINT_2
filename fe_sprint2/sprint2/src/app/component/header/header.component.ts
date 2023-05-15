@@ -31,22 +31,6 @@ export class HeaderComponent implements OnInit {
     this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
     this.isAdmin = this.roles.indexOf('ROLE_ADMIN') !== -1;
 
-    // if (this.username !== '') {
-    //   this.shoeService.findCustomer(this.username).subscribe(customer => {
-    //       if (customer != null) {
-    //         this.shoeService.sumQuantityCartById(customer.id).subscribe(value => {
-    //             this.quantityCart = value;
-    //             console.log(this.quantityCart);
-    //           },
-    //           error => {
-    //             console.log(error);
-    //           });
-    //       }
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     });
-    // }
   }
 
   whenLogout() {
