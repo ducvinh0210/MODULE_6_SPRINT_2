@@ -30,4 +30,11 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     IProductDto findClothesById(@Param("id") Integer id);
 
 
+    @Query(value = "select ps.quantity from product join product_size ps on product.id = ps.product_id\n" +
+            "join size s on s.id = ps.size_id\n" +
+            "where s.id = :idSize and product.id= :idProduct", nativeQuery = true)
+    Integer findByIdSize(@Param("idSize") Integer idSize,
+                         @Param("idProduct") Integer idProduct);
+
+
 }

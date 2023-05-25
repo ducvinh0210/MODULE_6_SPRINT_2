@@ -49,16 +49,16 @@ public class WedSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable().
                 authorizeRequests()
-                .antMatchers("/api/clothes/**",
+                .antMatchers("/api/clothes/login/**","/api/clothes/list-newest/**","/api/clothes/list/**","/api/clothes/list-price-asc/**",
                         "/oauth/google"
                 )
                 .permitAll()
 
-
-
+                .antMatchers("/api/clothes/detail/**","/api/clothes/remove-cart/**","/api/clothes/quantity-size/**","/api/clothes/history-cart/**")
+                .hasRole("CUSTOMER")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/clothes/user/**").access("hasRole('ADMIN')")
                 .anyRequest()
                 .authenticated()
 

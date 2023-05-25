@@ -7,4 +7,7 @@ public interface IProductSizeDto {
 
     String getSize();
 
+    Integer getIdSize();
+
+
 }

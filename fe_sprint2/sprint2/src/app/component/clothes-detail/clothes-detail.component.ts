@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from '../../service/token-storage.service';
 import {Title} from '@angular/platform-browser';
 import Swal from 'sweetalert2';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-clothes-detail',
@@ -25,6 +26,7 @@ export class ClothesDetailComponent implements OnInit {
   roles: string[] = [];
   isCustomer = false;
   isAdmin = false;
+  quantityOfCurrentSize: number;
 
 
   constructor(private clothesService: ClothesService,
@@ -40,6 +42,12 @@ export class ClothesDetailComponent implements OnInit {
     this.username = '';
     this.showUsername();
     this.getAllSizeByClothes();
+    debugger
+    if (this.tokenService.isLogger()) {
+      this.getClothesById();
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 
 
@@ -65,6 +73,7 @@ export class ClothesDetailComponent implements OnInit {
   }
 
   getClothesById(): void {
+
     this.clothesService.findClothesById(this.id).subscribe(value => {
       this.clothes = value;
     }, error => {
@@ -74,6 +83,7 @@ export class ClothesDetailComponent implements OnInit {
 
   getAllSizeByClothes(): void {
     this.clothesService.findAllSizeByClothes(this.id).subscribe(value => {
+        debugger
         this.clothesSizeList = value;
       }, error => {
         console.log(error);
@@ -86,17 +96,57 @@ export class ClothesDetailComponent implements OnInit {
   }
 
   ascQuantity(): void {
-    this.quantityChoose++;
+
+    if (this.quantityChoose < this.quantityOfCurrentSize) {
+      this.quantityChoose++;
+    }
   }
 
 
-  chooseClothesSize(id: number) {
+  chooseClothesSize(item: any) {
     this.quantityChoose = 1;
-    this.clothesSizeIdChoose = id;
+    this.clothesSizeIdChoose = item.id;
+    debugger
+    this.getQuantitySizeProduct(item.idSize);
   }
 
   addToCart(): void {
-    this.clothesService.addToCart(this.quantityChoose, this.idUser, this.clothesSizeIdChoose).subscribe(() => {
+    if (this.checkQuantity()) {
+      this.clothesService.addToCart(this.quantityChoose, this.idUser, this.clothesSizeIdChoose).subscribe(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Thêm vào giỏ hàng thành công!'
+        }).then(r => location.replace('cart'));
+      }, error => {
+        console.log(error);
+      });
+    } else {
+      this.quantityChoose = this.quantityOfCurrentSize;
+    }
+  }
+
+
+  getQuantitySizeProduct(idSize: number) {
+    this.clothesService.getQuantitySizeProduct(idSize, this.id).subscribe(next => {
+      this.quantityOfCurrentSize = next;
+    });
+
+  }
+
+  checkQuantity(): boolean {
+    if (this.quantityChoose > this.quantityOfCurrentSize) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -110,12 +160,14 @@ export class ClothesDetailComponent implements OnInit {
       });
 
       Toast.fire({
-        icon: 'success',
-        title: 'Thêm vào giỏ hàng thành công!'
-      }).then(r => location.replace('cart'));
-    }, error => {
-      console.log(error);
-    });
+        icon: 'warning',
+        title: 'Qúa số lượng trong kho, chỉ có thể chọn tối đa' + this.quantityOfCurrentSize
+      });
+
+      return false;
+    } else {
+      return true;
+    }
 
 
   }

@@ -39,7 +39,7 @@
                     <input class="hover-gray" value="-" style="width: 42px; border: 1px solid lightgray;
                     cursor: no-drop" *ngIf="item.quantity <= 1" disabled/>
 
-                    <input value="{{item.quantity}}" readonly style="width: 36px; background-color: white"/>
+                    <input  value="{{item.quantity}}" readonly style="width: 36px; background-color: white"/>
 
 <!--                    <input class="hover-gray" value="+" style="width: 42px; border: 1px solid lightgray"-->
 <!--                           (click)="ascQuantity(item.id)"/>-->
@@ -70,7 +70,7 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="shoping__cart__btns">
-          <a routerLink="/" class="primary-btn cart-btn hover-gray" style="border: 1px solid lightgray">
+          <a routerLink="/product-list" class="primary-btn cart-btn hover-gray" style="border: 1px solid lightgray">
             <span class="fa fa-arrow-left" aria-hidden="true"></span> TIẾP TỤC MUA SẮM</a>
                     <a class="primary-btn cart-btn cart-btn-right hover-gray" style="border: 1px solid lightgray"
                        (click)="updateCart()" *ngIf="cart !== undefined && cart.length > 0"><span class="icon_loading"></span> TIẾN HÀNH THANH TOÁN</a>

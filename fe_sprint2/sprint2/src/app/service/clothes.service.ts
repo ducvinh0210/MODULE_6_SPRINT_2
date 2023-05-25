@@ -37,6 +37,7 @@ export class ClothesService {
   }
 
   showListClothesNewest(nameProduct: string, pageNumber: any): Observable<any> {
+    debugger
     return this.httpClient.get<any>(API_URL + '/clothes/list-newest?nameProduct=' + nameProduct + '&page=' + pageNumber);
   }
 
@@ -87,4 +88,12 @@ export class ClothesService {
     return this.httpClient.get<DataResult<ICart>>(API_URL + '/clothes/history-cart/' + id + '?page=' + (curPage - 1) + '&size='
       + numberRecord);
   }
+
+  getQuantitySizeProduct(idSize: number, idProduct: number): Observable<any> {
+    return this.httpClient.get<any>(API_URL + '/clothes/quantity-size/' + idSize + '/' + idProduct);
+  }
+
+
+
+
 }

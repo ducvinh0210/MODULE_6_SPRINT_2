@@ -26,18 +26,21 @@ export class ClothesListComponent implements OnInit {
   constructor(private clothesService: ClothesService,
               private tokenService: TokenStorageService,
               private router: Router) {
-    this.listClothes();
   }
 
   ngOnInit(): void {
+
+    this.listClothes();
     this.username = '';
     this.showUsername();
   }
 
   showUsername() {
     this.username = this.tokenService.getUser().username;
-    // console.log(this.username);
+    console.log(this.username);
     this.roles = this.tokenService.getUser().roles;
+    console.log('day la role' + this.roles);
+
     this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
     this.isAdmin = this.roles.indexOf('ROLE_ADMIN') !== -1;
   }
@@ -77,6 +80,7 @@ export class ClothesListComponent implements OnInit {
 
 
   getLogin(id: number) {
+    debugger
     if (this.username === '' || this.username === null || this.username === undefined) {
       this.router.navigateByUrl('login');
     } else {

@@ -28,6 +28,7 @@ export class AuthService {
     };
   }
     login(obj: { username: string; password: string; }): Observable<any> {
+    debugger
     return this.http.post(AUTH_API + 'login', {
       username: obj.username,
       password: obj.password

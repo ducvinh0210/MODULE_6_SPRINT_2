@@ -14,7 +14,7 @@ import java.util.List;
 
 @Transactional
 public interface IProductSizeRepository extends JpaRepository<ProductSize, Integer> {
-    @Query(value = " select product_size.id as id, product_size.quantity as quantity, size.name as size from product_size join product on product_size.product_id= product.id join size on product_size.size_id= size.id where product.id=:id and product.is_delete= false and product_size.id>0", nativeQuery = true)
+    @Query(value = " select product_size.id as id, product_size.quantity as quantity, size.name as size, size.id as idSize from product_size join product on product_size.product_id= product.id join size on product_size.size_id= size.id where product.id=:id and product.is_delete= false and product_size.id>0", nativeQuery = true)
     List<IProductSizeDto> findAllSizeByClothes(@Param("id") Integer id);
 
 

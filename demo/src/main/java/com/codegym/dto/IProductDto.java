@@ -20,5 +20,8 @@ public interface IProductDto {
 
     Integer getSumQuantity();
 
+    Integer getQuantityProduct();
+
+
 
 }

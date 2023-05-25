@@ -6,6 +6,7 @@ import {TokenStorageService} from '../../service/token-storage.service';
 import {Title} from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 import {render} from 'creditcardpayments/creditCardPayments';
+import {ICustomer} from '../../model/i-customer';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ClothesCardComponent implements OnInit {
   isAdmin = false;
   isEmployee = false;
   pay = 'none';
+  customer: ICustomer;
 
 
   constructor(private clothesService: ClothesService,
@@ -52,54 +54,8 @@ export class ClothesCardComponent implements OnInit {
 
           console.log('day la customer' + customer);
           if (customer != null) {
-            this.clothesService.findCartByUser(customer.id).subscribe(value => {
-                console.log(' day la value' + value);
-                this.cart = value;
-
-                for (const item of value) {
-                  this.totalPrice += item.price * item.quantity;
-                  this.finalPrice += item.price * (1 - item.discount / 100) * item.quantity;
-                }
-                console.log(Math.round(this.finalPrice / 23000 * 100) / 100);
-                render(
-                  {
-                    id: '#myPaypal',
-                    value: '' + Math.round(this.finalPrice / 23000 * 100) / 100,
-                    currency: 'USD',
-                    onApprove: (details) => {
-
-
-                      // this.clothesService.setQuantityProduct(customer.id).subscribe(next => {
-                      //   console.log('abc');
-                      // });
-                      this.clothesService.setQuantityProduct(customer.id).subscribe(() => {
-
-                        const Toast = Swal.mixin({
-                          toast: true,
-                          position: 'top-end',
-                          showConfirmButton: false,
-                          timer: 2000,
-                          timerProgressBar: true,
-                          didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer);
-                            toast.addEventListener('mouseleave', Swal.resumeTimer);
-                          }
-                        });
-
-                        Toast.fire({
-                          icon: 'success',
-                          title: 'Thanh toán thành công!'
-                        }).then(r => window.location.replace(''));
-                      }, error => {
-                        console.log(error);
-                      });
-                    }
-                  }
-                );
-              },
-              error => {
-                console.log(error);
-              });
+            this.customer = customer;
+            this.getListCart();
           }
         },
         error => {
@@ -108,10 +64,63 @@ export class ClothesCardComponent implements OnInit {
     }
   }
 
+  getListCart() {
+    this.clothesService.findCartByUser(this.customer.id).subscribe(value => {
+        console.log(' day la value' + value);
+        this.cart = value;
+
+        for (const item of value) {
+          this.totalPrice += item.price * item.quantity;
+          this.finalPrice += item.price * (1 - item.discount / 100) * item.quantity;
+        }
+        console.log(Math.round(this.finalPrice / 23000 * 100) / 100);
+        render(
+          {
+            id: '#myPaypal',
+            value: '' + Math.round(this.finalPrice / 23000 * 100) / 100,
+            currency: 'USD',
+            onApprove: (details) => {
+
+
+              // this.clothesService.setQuantityProduct(customer.id).subscribe(next => {
+              //   console.log('abc');
+              // });
+              this.clothesService.setQuantityProduct(this.customer.id).subscribe(() => {
+
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 2000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                  }
+                });
+
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Thanh toán thành công!'
+                }).then(r => window.location.replace(''));
+              }, error => {
+                console.log(error);
+              });
+            }
+          }
+        );
+      },
+      error => {
+        console.log(error);
+      });
+
+  }
 
   descQuantity(id: number): void {
     this.clothesService.descQuantityCart(id).subscribe(() => {
-      window.location.reload();
+      // window.location.reload();
+      this.getListCart();
+
     }, error => {
       console.log(error);
     });
@@ -146,12 +155,13 @@ export class ClothesCardComponent implements OnInit {
       Toast.fire({
         icon: 'warning',
         title: 'Số lượng sản phẩm trong kho không đủ!'
-      }).then(r => location.replace('cart'));
+      });
 
 
     } else {
       this.clothesService.ascQuantityCart(item.id).subscribe(() => {
-        window.location.reload();
+        // window.location.reload();
+        this.getListCart();
       }, error => {
         console.log(error);
       });

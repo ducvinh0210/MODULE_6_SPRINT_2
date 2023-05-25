@@ -25,10 +25,15 @@ public class OrderDetailService implements IOrderDetailService {
     @Override
     public void addProductCart(Integer quantity, Integer customerId, Integer productSizeId) {
         List<IClothesCartDto> listClothesCart = findCartByUser(customerId);
-        for (IClothesCartDto iClothesCartDto: listClothesCart) {
-            if (iClothesCartDto.getProductSizeId().equals(productSizeId)){
-                  iOrderDetailRepository.updateQuantityOrderDetail(quantity+iClothesCartDto.getQuantity(),iClothesCartDto.getId());
-          return;
+        for (IClothesCartDto iClothesCartDto : listClothesCart) {
+            if (iClothesCartDto.getProductSizeId().equals(productSizeId)) {
+                if (quantity + iClothesCartDto.getQuantity() > iClothesCartDto.getQuantityProduct()) {
+                    return;
+                } else {
+                    iOrderDetailRepository.updateQuantityOrderDetail(quantity + iClothesCartDto.getQuantity(), iClothesCartDto.getId());
+                    return;
+                }
+
             }
 
         }
@@ -57,7 +62,7 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public Page<IClothesCartDto> findAllHistoryCart(Integer id, Pageable pageable) {
-        return iOrderDetailRepository.findAllHistoryCart(id,pageable);
+        return iOrderDetailRepository.findAllHistoryCart(id, pageable);
     }
 
 }

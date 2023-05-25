@@ -11,12 +11,14 @@ import { ProductDetailComponent } from './component/product-detail/product-detai
 import { PaymentCardComponent } from './component/payment-card/payment-card.component';
 import { UserCreateComponent } from './component/user-create/user-create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import { ClothesListComponent } from './component/clothes-list/clothes-list.component';
 import { ClothesCardComponent } from './component/clothes-card/clothes-card.component';
 import { ClothesDetailComponent } from './component/clothes-detail/clothes-detail.component';
 import { ClothesHistoryComponent } from './component/clothes-history/clothes-history.component';
+import {AuthInterceptor} from './component/security/auth.interceptor';
+
 
 
 const googleLoginOptions = {
@@ -63,8 +65,13 @@ const googleLoginOptions = {
           },
         ]
       } as SocialAuthServiceConfig,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     }
-  ],
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

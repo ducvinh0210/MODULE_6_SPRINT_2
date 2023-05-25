@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService implements IProductService {
- @Autowired
- private IProductRepository iProductRepository;
+    @Autowired
+    private IProductRepository iProductRepository;
 
     @Override
     public Page<IProductDto> showListClothes(String nameProduct, String manufacturerProduct, String typeProduct, Integer priceStart, Integer priceEnd, Pageable pageable) {
@@ -27,6 +27,11 @@ public class ProductService implements IProductService {
     @Override
     public IProductDto findById(Integer id) {
         return iProductRepository.findClothesById(id);
+    }
+
+    @Override
+    public Integer findByIdSize(Integer idSize, Integer idProduct) {
+        return iProductRepository.findByIdSize(idSize,idProduct);
     }
 
 

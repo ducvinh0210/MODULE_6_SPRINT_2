@@ -4,7 +4,7 @@
       <div class="col-lg-6 col-md-6">
         <div class="product__details__pic">
           <div class="product__details__pic__item" style="box-shadow:15px 15px 15px lightblue;">
-              <img width="100px" class="product__details__pic__item--large"
+            <img width="100px" class="product__details__pic__item--large"
                  src="{{clothes.image}}" alt="">
           </div>
 
@@ -33,10 +33,10 @@
           <p style="margin-bottom: 10px; line-height: 22px">{{clothes.describes}}</p>
           <p style="margin-bottom: 5px; color: red;">Tối đa 3 sản phẩm / 1 size / 1 lần chọn.</p>
 
-          <div class="sidebar__item__size" *ngFor="let item of clothesSizeList; index as i">
+          <div class="sidebar__item__size" *ngFor="let item of clothesSizeList; index as i" (click)="chooseClothesSize(item)">
             <label class="hover-gray" *ngIf="clothesSizeIdChoose != item.id"
                    style="padding: 3px 10px; margin-bottom: 17px; border: 1px solid lightgray">{{item.size}}
-              <input type="radio" (click)="chooseClothesSize(item.id)"/>
+              <input type="radio" />
             </label>
 
             <label
@@ -49,23 +49,23 @@
           <br>
 
 
-                    <a class="heart-icon hover-gray" (click)="descQuantity()" *ngIf="quantityChoose > 1">
-                      <i class="fa fa-minus" aria-hidden="true"></i></a>
-                    <a class="heart-icon" style="cursor: no-drop" *ngIf="quantityChoose <= 1">
-                      <i class="fa fa-minus" aria-hidden="true"></i></a>
+          <a class="heart-icon hover-gray" (click)="descQuantity()" *ngIf="quantityChoose > 1">
+            <i class="fa fa-minus" aria-hidden="true"></i></a>
+          <a class="heart-icon" style="cursor: no-drop" *ngIf="quantityChoose <= 1">
+            <i class="fa fa-minus" aria-hidden="true"></i></a>
 
-                    <a class="heart-icon" style="background-color: white">{{quantityChoose}}</a>
 
-                                <a class="heart-icon hover-gray" (click)="ascQuantity()" *ngIf="quantityChoose < 3">
-                                  <i class="fa fa-plus" aria-hidden="true"></i></a>
-                                <a class="heart-icon" style="cursor: no-drop" *ngIf="quantityChoose >= 3">
-                                  <i class="fa fa-plus" aria-hidden="true"></i></a>
+          <input [(ngModel)]="quantityChoose" (change)="checkQuantity()"  class="heart-icon" style="background-color: white; width: 60px">
+
+          <a class="heart-icon hover-gray" (click)="ascQuantity()" *ngIf="quantityChoose < quantityOfCurrentSize">
+            <i class="fa fa-plus" aria-hidden="true"></i></a>
+          <a class="heart-icon" style="cursor: no-drop" *ngIf="quantityChoose >= quantityOfCurrentSize">
+            <i class="fa fa-plus" aria-hidden="true"></i></a>
 
           <a class="primary-btn hover-green ml-2" *ngIf="clothesSizeIdChoose > 0" (click)="addToCart()">
             Thêm vào giỏ hàng</a>
           <a class="primary-btn ml-2" style="cursor: no-drop; background-color: mediumseagreen; color: white"
              *ngIf="clothesSizeIdChoose == 0">Chọn SIZE <i class="fa fa-hand-o-up" aria-hidden="true"></i></a>
-
 
 
           <ul style="margin-top: 10px; margin-bottom: 5px">

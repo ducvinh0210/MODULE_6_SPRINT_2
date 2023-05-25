@@ -231,13 +231,23 @@ public class ClothesController {
 
     @GetMapping("/history-cart/{customerId}")
     public ResponseEntity<Page<IClothesCartDto>> findAllHistoryCart(@PathVariable("customerId") Integer customerId,
-                                                                   @PageableDefault(value = 3) Pageable pageable) {
+                                                                    @PageableDefault(value = 3) Pageable pageable) {
         Page<IClothesCartDto> iClothesCartDtoPage = iOrderDetailService.findAllHistoryCart(customerId, pageable);
         if (iClothesCartDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(iClothesCartDtoPage, HttpStatus.OK);
     }
+
+    @GetMapping("/quantity-size/{idSize}/{idProduct}")
+    public ResponseEntity<?>findAllProductSize(@PathVariable("idSize") Integer idSize,
+                                               @PathVariable("idProduct") Integer idProduct){
+        Integer quantitySizeProduct=iProductService.findByIdSize(idSize,idProduct);
+        return new ResponseEntity<>(quantitySizeProduct,HttpStatus.OK);
+
+    }
+
+
 
 
 

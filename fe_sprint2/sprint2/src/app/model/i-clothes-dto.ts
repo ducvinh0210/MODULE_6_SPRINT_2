@@ -8,5 +8,7 @@ export interface IClothesDto {
   describes?: string;
   type?: string;
   sumQuantity?: number;
+  quantityProduct?: number;
+
 
 }
